@@ -9,12 +9,15 @@ try:
     with (sync_playwright() as playwright):
         browser = playwright.chromium.launch(headless=False, slow_mo=50)
         page = browser.new_page()
+        #1
         logger.info(" Open Github home-page")
         page.goto("https://github.com")
     
+        #2
         logger.info(" Validate the user is logged out")
         assert page.query_selector("text ='Sign up for GitHub'").is_visible(), "The user is not logged out!"
     
+        #3
         logger.info(" Search the repo: 'org:microsoft typescript'")
         search_box = page.locator('[placeholder = "Search or jump to..."]')
         search_box.click()
@@ -22,23 +25,26 @@ try:
         search.fill("org:microsoft typescript")
         search_box.press('Enter')
     
+        #4
         logger.info(" Nevigate to 'TypeScript-Handbook' page")
         page.click('a[href="/microsoft/TypeScript-Handbook"]')
 
+        #5
         logger.info(" Validate the repo page shows the 'is now read-only' message")
         page.wait_for_selector("text ='This repository has been archived by the owner on Oct 12, 2022. It is now read-only.'")
         assert page.query_selector("text ='This repository has been archived by the owner on Oct 12, 2022. It is now read-only.'").is_visible(), "'is now read-only' message not found"
 
-    ######
+        #6
         logger.info(" Validate that there are 38 branches")
-        x = page.query_selector('a[href = "/microsoft/TypeScript-Handbook/branches"]')
-        print(x.inner_text())
-    ###### 
+        branches_text = page.locator('a[href="/microsoft/TypeScript-Handbook/branches"] strong').text_content()
+        assert branches_text == "38", f"Expected 38 branches, found {branches_text}"
 
+        #7
         logger.info(" Validate that there are more than 150 watchers")
         element = page.query_selector('a[href="/microsoft/TypeScript-Handbook/watchers"]')
         assert int(element.inner_text().split()[0])>150, f"Expected more than 150 watchers, found {int(element.inner_text().split()[0])}"
 
+        #8
         logger.info(" Validate that there is at least one contributor coming from Huddersfield")
         page.locator("a.Link--primary.no-underline.Link.d-flex.flex-items-center[href='/microsoft/TypeScript-Handbook/graphs/contributors']").click()
         page.wait_for_selector('.contrib-person')
