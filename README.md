@@ -51,23 +51,15 @@ To run this project, you will need:
     ```
 
 2. **Check the exit code**:
-    After the script execution, you can check the exit code in the terminal:
-    ```sh
-    echo %ERRORLEVEL%    # On Windows
-    echo $?              # On Unix-based systems (Linux, macOS)
-    ```
+    After the script execution, you can check the exit code in the terminal and this is what you should see when running the script: 
+    INFO: Open Github home-page
 
-## Example
+    INFO: Validate the user is logged out
+    INFO: Search the repo: 'org:microsoft typescript'
+    INFO: Navigate to 'TypeScript-Handbook' page
+    INFO: Validate the repo page shows the 'is now read-only' message
+    INFO: Validate that there are 38 branches
+    INFO: Validate that there are more than 150 watchers
+    INFO: Validate that there is at least one contributor coming from Huddersfield
+    INFO: All validations passed
 
-Here's an example of what you should see when running the script:
-
-```sh
-INFO: Open Github home-page
-INFO: Validate the user is logged out
-INFO: Search the repo: 'org:microsoft typescript'
-INFO: Navigate to 'TypeScript-Handbook' page
-INFO: Validate the repo page shows the 'is now read-only' message
-INFO: Validate that there are 38 branches
-INFO: Validate that there are more than 150 watchers
-INFO: Validate that there is at least one contributor coming from Huddersfield
-INFO: All validations passed
